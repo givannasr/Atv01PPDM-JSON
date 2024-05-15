@@ -4,6 +4,8 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, ScrollView,
 import * as DocumentPicker from 'expo-document-picker';
 import * as FileSystem from 'expo-file-system';
 
+import api from '../Api/api';
+
 export default function leituraJSON() {
   const [dados, setDados] = useState(null);
 
@@ -38,9 +40,7 @@ export default function leituraJSON() {
       const dadosJSON = JSON.parse(conteudo);
       // Atualizar o estado com os dados do arquivo JSON
       setDados(dadosJSON);
-
-
-
+      
     } catch (error) {
       console.error('Erro ao selecionar o arquivo:', error);
     }
@@ -48,6 +48,7 @@ export default function leituraJSON() {
 
   const Salvar = async () => {
     await api.post('/user', dados)
+    console.log(dados);
   };
 
   return (
@@ -68,6 +69,8 @@ export default function leituraJSON() {
 
               <Text>Dados do arquivo JSON:</Text>
               <Text>{JSON.stringify(dados)}</Text>
+
+              <Button title='Salvar' onPress={Salvar}></Button>
 
               <Text style={styles.titleInfo}>Nome:</Text>
               <TextInput style={styles.textInput} value={dados.nome} />
@@ -90,7 +93,6 @@ export default function leituraJSON() {
               <Text style={styles.titleInfo}>Telefone:</Text>
               <TextInput style={styles.textInput} value={dados.telefone} />
 
-              <Button title='Salvar' onPress={Salvar}></Button>
             </View>
 
           ) : (
