@@ -39,9 +39,15 @@ export default function leituraJSON() {
       // Atualizar o estado com os dados do arquivo JSON
       setDados(dadosJSON);
 
+
+
     } catch (error) {
       console.error('Erro ao selecionar o arquivo:', error);
     }
+  };
+
+  const Salvar = async () => {
+    await api.post('/user', dados)
   };
 
   return (
@@ -84,7 +90,7 @@ export default function leituraJSON() {
               <Text style={styles.titleInfo}>Telefone:</Text>
               <TextInput style={styles.textInput} value={dados.telefone} />
 
-              <Button title='Salvar' ></Button>
+              <Button title='Salvar' onPress={Salvar}></Button>
             </View>
 
           ) : (
